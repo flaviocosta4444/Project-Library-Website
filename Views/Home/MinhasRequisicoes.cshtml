@@ -1,0 +1,45 @@
+﻿@model IEnumerable<B_LEI.Models.Requisicao>
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-primary">Minhas Requisições</h1>
+        <p class="text-muted">Veja abaixo a lista das suas requisições de livros.</p>
+    </div>
+
+    <!-- Tabela de Requisições -->
+    <div class="card shadow-lg border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-primary">
+                    <tr class="text-center">
+                        <th scope="col">Título do Livro</th>
+                        <th scope="col">Data de Requisição</th>
+                        <th scope="col">Data de Entrega</th>
+                        <th scope="col">Data de Devolução</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var requisicao in Model)
+                        {
+                            <tr class="text-center">
+                                <td>@requisicao.Livro?.Titulo</td>
+                                <td>@requisicao.DataRequisicao.ToShortDateString()</td>
+                                <td>@(requisicao.DataEntrega?.ToShortDateString() ?? "Pendente")</td>
+                                <td>@(requisicao.DataDevolucao?.ToShortDateString() ?? "Por entregar")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">Nenhuma requisição encontrada.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

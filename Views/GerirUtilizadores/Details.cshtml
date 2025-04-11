@@ -1,0 +1,81 @@
+﻿@model B_LEI.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Detalhes do Usuário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-primary">@ViewData["Title"]</h1>
+        <p class="text-muted">Veja abaixo as informações do utilizador selecionado.</p>
+    </div>
+
+    <!-- Detalhes do Usuário -->
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center">
+            <h4>@Model.Name</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4 text-secondary">Nome:</dt>
+                <dd class="col-sm-8">@Model.Name</dd>
+
+                <dt class="col-sm-4 text-secondary">Email:</dt>
+                <dd class="col-sm-8">@Model.Email</dd>
+
+                <dt class="col-sm-4 text-secondary">Data de Criação:</dt>
+                <dd class="col-sm-8">@Model.DataCriada.ToString("dd/MM/yyyy")</dd>
+
+                <dt class="col-sm-4 text-secondary">Bloqueado:</dt>
+                <dd class="col-sm-8">
+                    @if (Model.LockoutEnd != null && Model.LockoutEnd > DateTimeOffset.Now)
+                    {
+                        <span class="text-danger">Sim</span>
+                        <p><strong>Motivo do bloqueio:</strong> @Model.LockoutReason</p>
+                    }
+                    else
+                    {
+                        <span class="text-success">Não</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- Formulário de Bloqueio -->
+    <div class="card mt-4 shadow-lg border-0">
+        <div class="card-body">
+            @if (ViewBag.Roles != null && (ViewBag.Roles.Contains("leitor") || ViewBag.Roles.Contains("bibliotecario")))
+            {
+                @if (Model.LockoutEnd == null || Model.LockoutEnd <= DateTimeOffset.Now)
+                {
+                    <form method="post" action="@Url.Action("Bloquear", "GerirUtilizadores", new { id = Model.Id })">
+                        <div class="form-group mb-3">
+                            <label for="motivo" class="form-label">Motivo do Bloqueio</label>
+                            <textarea id="motivo" name="motivo" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-danger btn-lg rounded-pill shadow-lg">
+                            <i class="bi bi-lock-fill"></i> Bloquear Usuário
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <a href="@Url.Action("Desbloquear", "GerirUtilizadores", new { id = Model.Id })" class="btn btn-success btn-lg rounded-pill shadow-lg">
+                        <i class="bi bi-unlock-fill"></i> Desbloquear Usuário
+                    </a>
+                }
+            }
+        </div>
+    </div>
+
+    <!-- Botão de Navegação -->
+    <div class="text-center mt-4">
+        <a href="@Url.Action("Index", "GerirUtilizadores")" class="btn btn-secondary btn-lg rounded-pill shadow-lg">
+            <i class="bi bi-arrow-left"></i> Voltar para a Lista
+        </a>
+    </div>
+</div>
+

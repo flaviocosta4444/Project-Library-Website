@@ -1,0 +1,76 @@
+﻿@model IEnumerable<B_LEI.Models.Livro>
+
+@{
+    ViewData["Title"] = "B_LEI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Barra Vertical de Categorias -->
+        <nav class="col-md-3 col-lg-2 bg-light border-end py-4">
+            <h4 class="text-primary text-center mb-4">Categorias</h4>
+            <ul class="list-group">
+                @foreach (var cat in ViewBag.Categorias)
+                {
+                    <li class="list-group-item">
+                        <a href="?categoria=@cat.Nome" class="text-decoration-none text-dark">
+                            @cat.Nome
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+
+        <!-- Conteúdo Principal -->
+        <main class="col-md-9 col-lg-10 py-4">
+            <!-- Barra de Busca -->
+            <div class="mb-4">
+                <form method="get" action="" class="input-group">
+                    <input type="text" name="search" class="form-control form-control-lg" placeholder="Buscar por título ou autor..."
+                           value="@ViewContext.HttpContext.Request.Query["search"]" />
+                    <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                        <i class="bi bi-search"></i> Buscar
+                    </button>
+                </form>
+            </div>
+
+            <!-- Imagem de Capa -->
+            <div class="mb-4">
+                <img src="/images/fotocapa.png" alt="Capa" class="img-fluid rounded shadow-lg">
+            </div>
+
+            <!-- Botão Minhas Requisições -->
+            <div class="text-end mb-4">
+                <a asp-action="MinhasRequisicoes" class="btn btn-outline-secondary btn-lg shadow-sm">
+                    <i class="bi bi-journal-text"></i> Minhas Requisições
+                </a>
+            </div>
+
+            <!-- Lista de Livros -->
+            <div>
+                <h3 class="text-primary text-center mb-4">Livros Disponíveis</h3>
+                <div class="row g-4">
+                    @foreach (var livro in Model)
+                    {
+                        <div class="col-md-3">
+                            <div class="card shadow-sm">
+                                <img src="~/FotoLivro/@livro.Capa" alt="@livro.Titulo" class="card-img-top img-fluid">
+                                <div class="card-body">
+                                    <h5 class="card-title text-truncate">@livro.Titulo</h5>
+                                    <p class="card-text"><strong>Autor:</strong> @livro.Autor?.Nome</p>
+                                    <p class="card-text"><strong>Categoria:</strong> @livro.Categoria?.Nome</p>
+                                    <p class="card-text"><strong>Publicação:</strong> <small>@livro.AnoPublicacao</small></p>
+                                    <a asp-controller="Livros" asp-action="Details" asp-route-id="@livro.LivroId"
+                                       class="btn btn-primary btn-sm rounded-pill mt-2">
+                                        <i class="bi bi-info-circle"></i> Ver Detalhes
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

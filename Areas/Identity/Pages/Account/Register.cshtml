@@ -1,0 +1,126 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="row">
+    <div class="col-lg-6 mx-auto rounded border p-3">
+        <h2 class="text-center mb-3">Register</h2>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Username" class="form-control" aria-required="true" />
+                <label asp-for="Input.Username">Username</label>
+                <span asp-validation-for="Input.Username" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Name" class="form-control" aria-required="true" />
+                <label asp-for="Input.Name">Nome</label>
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.Email">Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <!-- Campo de Contacto (obrigatório apenas para Bibliotecário e Leitor) -->
+            <div class="form-floating mb-3" id="contactField" style="display:none;">
+                <input asp-for="Input.Contacto" class="form-control" id="Contacto" aria-required="false" />
+                <label asp-for="Input.Contacto">Contacto</label>
+                <span asp-validation-for="Input.Contacto" class="text-danger"></span>
+            </div>
+
+            <!-- Campo de Morada (obrigatório apenas para Leitor) -->
+            <div class="form-floating mb-3" id="addressField" style="display:none;">
+                <input asp-for="Input.Morada" class="form-control" id="Morada" aria-required="false" />
+                <label asp-for="Input.Morada">Morada</label>
+                <span asp-validation-for="Input.Morada" class="text-danger"></span>
+            </div>
+
+            <!-- Campo de Senha -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" type="password" class="form-control" aria-required="true" />
+                <label asp-for="Input.Password">Senha</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <!-- Campo de Confirmar Senha -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ConfirmPassword" type="password" class="form-control" aria-required="true" />
+                <label asp-for="Input.ConfirmPassword">Confirmar Senha</label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <label asp-for="Input.Role"></label>
+                <select asp-for="Input.Role" class="form-control" asp-items='new SelectList(ViewBag.Roles, "Name", "Name")' onchange="toggleFields()">
+                    <option value="">Select Role</option>
+                </select>
+                <span asp-validation-for="Input.Role" class="text-danger"></span>
+            </div>
+
+            <div class="row mb-3">
+                <div class="offset-sm-4 col-sm-4 d-grid">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+                <div class="col-sm-4 d-grid">
+                    <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    // Função que mostra ou esconde campos com base no papel selecionado
+    function toggleFields() {
+        // Pega o valor do papel selecionado
+        var role = document.querySelector('select[name="Input.Role"]').value;
+
+        // Mostra/Esconde os campos com base no papel selecionado
+        if (role === "administrador") {
+            // Esconde contacto e morada para administrador
+            document.getElementById('contactField').style.display = 'none';
+            document.getElementById('addressField').style.display = 'none';
+
+            // Remove os campos "required" dos campos "Contacto" e "Morada"
+            document.getElementById('Contacto').required = false;
+            document.getElementById('Morada').required = false;
+        } else if (role === "bibliotecario") {
+            // Mostra contacto, esconde morada para bibliotecário
+            document.getElementById('contactField').style.display = 'block';
+            document.getElementById('addressField').style.display = 'none';
+
+            // "Contacto" é requerido, mas "Morada" não é
+            document.getElementById('Contacto').required = true;
+            document.getElementById('Morada').required = false;
+        } else if (role === "leitor") {
+            // Mostra contacto e morada para leitor
+            document.getElementById('contactField').style.display = 'block';
+            document.getElementById('addressField').style.display = 'block';
+
+            // "Contacto" e "Morada" são requeridos
+            document.getElementById('Contacto').required = true;
+            document.getElementById('Morada').required = true;
+        } else {
+            // Esconde tudo se nenhum papel for selecionado
+            document.getElementById('contactField').style.display = 'none';
+            document.getElementById('addressField').style.display = 'none';
+
+            // Remove os campos "required"
+            document.getElementById('Contacto').required = false;
+            document.getElementById('Morada').required = false;
+        }
+    }
+
+    // Chama a função de toggle quando a página for carregada
+    window.onload = toggleFields;
+</script>

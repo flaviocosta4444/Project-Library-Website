@@ -1,0 +1,82 @@
+﻿@model IEnumerable<B_LEI.Models.Requisicao>
+@{
+    ViewData["Title"] = "Lista de Requisições";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-primary">Lista de Requisições</h1>
+        <p class="text-muted">Acompanhe todas as requisições de livros no sistema.</p>
+    </div>
+
+    <!-- Alerta para Requisições Atrasadas -->
+    @if (ViewData["RequisicoesAtrasadas"] is List<B_LEI.Models.Requisicao> atrasadas && atrasadas.Any())
+    {
+        <div class="alert alert-danger text-center">
+            <strong>Atenção:</strong> Existem @atrasadas.Count requisições em atraso!
+        </div>
+    }
+
+    <!-- Tabela de Requisições -->
+    <div class="card shadow-lg border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-primary">
+                    <tr class="text-center">
+                        <th scope="col">Livro</th>
+                        <th scope="col">Usuário</th>
+                        <th scope="col">Data Requisição</th>
+                        <th scope="col">Prazo Entrega</th>
+                        <th scope="col">Data Devolução</th>
+                        <th scope="col">Estado Devolução</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var requisicao in Model)
+                        {
+                            var status = "Não Entregue";
+                            if (requisicao.DataEntrega.HasValue && requisicao.DataEntrega.Value < DateTime.Now && !requisicao.DataDevolucao.HasValue)
+                            {
+                                status = "Atrasada";
+                            }
+                            else if (requisicao.DataDevolucao.HasValue)
+                            {
+                                status = "Entregue";
+                            }
+
+                            <tr class="text-center @(status == "Atrasada" ? "table-danger" : "")">
+                                <td>@requisicao.Livro?.Titulo</td>
+                                <td>@requisicao.User?.UserName</td>
+                                <td>@requisicao.DataRequisicao.ToString("dd/MM/yyyy")</td>
+                                <td>@requisicao.DataEntrega?.ToString("dd/MM/yyyy")</td>
+                                <td>@requisicao.DataDevolucao?.ToString("dd/MM/yyyy")</td>
+                                <td>@status</td>
+                                <td>
+                                    @if (!requisicao.DataDevolucao.HasValue)
+                                    {
+                                        <form asp-action="Entregar" asp-controller="Livros" method="post" style="display:inline;">
+                                            <input type="hidden" name="id" value="@requisicao.Id" />
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                <i class="bi bi-check-circle"></i> Entregar
+                                            </button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">Nenhuma requisição encontrada.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

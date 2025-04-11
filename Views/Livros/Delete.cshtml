@@ -1,0 +1,77 @@
+﻿@model B_LEI.Models.Livro
+
+@{
+    ViewData["Title"] = "Excluir Livro";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-danger">Excluir Livro</h1>
+        <p class="text-muted">Tem certeza de que deseja excluir o livro abaixo? Essa ação não pode ser desfeita.</p>
+    </div>
+
+    <!-- Informações do Livro -->
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-danger text-white text-center">
+            <h4>@Model?.Titulo</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!-- Capa do Livro -->
+                <div class="col-md-4 text-center">
+                    @if (!string.IsNullOrEmpty(Model.Capa))
+                    {
+                        <img src="~/FotoLivro/@Model.Capa" alt="@Model.Titulo" class="img-fluid rounded shadow" style="max-width: 200px; max-height: 300px;" />
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">Sem imagem de capa disponível.</div>
+                    }
+                </div>
+
+                <!-- Detalhes do Livro -->
+                <div class="col-md-8">
+                    <dl class="row">
+                        <dt class="col-sm-4 text-secondary">Título:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Titulo)</dd>
+
+                        <dt class="col-sm-4 text-secondary">ISBN:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.ISBN)</dd>
+
+                        <dt class="col-sm-4 text-secondary">Edição:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Edicao)</dd>
+
+                        <dt class="col-sm-4 text-secondary">Ano de Publicação:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.AnoPublicacao)</dd>
+
+                        <dt class="col-sm-4 text-secondary">Descrição:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Descricao)</dd>
+
+                        <dt class="col-sm-4 text-secondary">Autor:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Autor.Nome)</dd>
+
+                        <dt class="col-sm-4 text-secondary">Categoria:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Categoria.Nome)</dd>
+
+                        <dt class="col-sm-4 text-secondary">Editora:</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Editora.Nome)</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulário de Exclusão -->
+    <div class="text-center mt-4">
+        <form asp-action="Delete" method="post" class="d-inline">
+            <input type="hidden" asp-for="LivroId" />
+            <button type="submit" class="btn btn-danger btn-lg rounded-pill shadow">
+                <i class="bi bi-trash"></i> Excluir
+            </button>
+        </form>
+        <a asp-action="Index" class="btn btn-secondary btn-lg rounded-pill shadow ms-2">
+            <i class="bi bi-x-circle"></i> Cancelar
+        </a>
+    </div>
+</div>

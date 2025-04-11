@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewData["Title"] = "Bibliotecários";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Lista de Bibliotecários</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Verificado pelo Admin</th>
+                <th>Verificado por</th> <!-- Nova coluna -->
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="6" class="text-center text-muted">Nenhum bibliotecário encontrado.</td>
+                </tr>
+            }
+            else
+            {
+                int count = 1;
+                foreach (var bibliotecario in Model)
+                {
+                    <tr>
+                        <td>@count</td>
+                        <td>@bibliotecario.Name</td>
+                        <td>@bibliotecario.Email</td>
+                        <td>
+                            @if (bibliotecario.IsEmailConfirmedByAdmin)
+                            {
+                                <span class="badge bg-success">Sim</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Não</span>
+                            }
+                        </td>
+                        <td>
+                            @if (bibliotecario.IsEmailConfirmedByAdmin)
+                            {
+                                @(bibliotecario.VerifiedByAdminUsername ?? "Não disponível")
+                            }
+                            else
+                            {
+                                <span class="text-muted">N/A</span>
+                            }
+                        </td>
+                        <td>
+                            @if (!bibliotecario.IsEmailConfirmedByAdmin)
+                            {
+                                <form asp-action="ApproveBibliotecario" method="post" style="display:inline;">
+                                    <input type="hidden" name="userId" value="@bibliotecario.Id" />
+                                    <button type="submit" class="btn btn-sm btn-primary">
+                                        Verificar
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <button class="btn btn-sm btn-secondary" disabled>
+                                    Já Verificado
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                    count++;
+                }
+            }
+        </tbody>
+    </table>
+</div>

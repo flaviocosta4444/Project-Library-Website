@@ -1,0 +1,130 @@
+﻿@model B_LEI.Models.LivroViewModel
+
+@{
+    ViewData["Title"] = "Adicionar Livro";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-primary">Adicionar Novo Livro</h1>
+        <p class="text-muted">Preencha as informações abaixo para adicionar um novo livro na biblioteca.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Card -->
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h4 class="card-title text-center text-secondary mb-4">Informações do Livro</h4>
+
+                    <!-- Formulário -->
+                    <form asp-action="Create" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert" style="display: none;"></div>
+
+                        <!-- Título -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Titulo" class="form-label text-primary"></label>
+                            <input asp-for="Titulo" class="form-control shadow-sm" placeholder="Título do livro..." />
+                            <span asp-validation-for="Titulo" class="text-danger"></span>
+                        </div>
+
+                        <!-- Estado -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Estado" class="form-label text-primary"></label>
+                            <select asp-for="Estado" class="form-select shadow-sm">
+                                <option value="true">Disponível</option>
+                                <option value="false">Indisponível</option>
+                            </select>
+                        </div>
+
+                        <!-- ISBN -->
+                        <div class="form-group mb-3">
+                            <label asp-for="ISBN" class="form-label text-primary"></label>
+                            <input asp-for="ISBN" class="form-control shadow-sm" placeholder="Código ISBN do livro..." />
+                            <span asp-validation-for="ISBN" class="text-danger"></span>
+                        </div>
+
+                        <!-- Edição -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Edicao" class="form-label text-primary"></label>
+                            <input asp-for="Edicao" class="form-control shadow-sm" placeholder="Edição do livro..." />
+                            <span asp-validation-for="Edicao" class="text-danger"></span>
+                        </div>
+
+                        <!-- Ano de Publicação -->
+                        <div class="form-group mb-3">
+                            <label asp-for="AnoPublicacao" class="form-label text-primary"></label>
+                            <input asp-for="AnoPublicacao" class="form-control shadow-sm" placeholder="Ano de publicação..." />
+                            <span asp-validation-for="AnoPublicacao" class="text-danger"></span>
+                        </div>
+
+                        <!-- Capa -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Capa" class="form-label text-primary"></label>
+                            <input type="file" asp-for="Capa" class="form-control shadow-sm" />
+                            <small class="form-text text-muted">Carregue uma imagem da capa do livro (opcional).</small>
+                            <span asp-validation-for="Capa" class="text-danger"></span>
+                        </div>
+
+                        <!-- Descrição -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Descricao" class="form-label text-primary"></label>
+                            <textarea asp-for="Descricao" class="form-control shadow-sm" rows="3" placeholder="Descrição do livro..."></textarea>
+                            <span asp-validation-for="Descricao" class="text-danger"></span>
+                        </div>
+
+                        <!-- Autor -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Autor" class="form-label text-primary"></label>
+                            <div class="input-group shadow-sm">
+                                <select asp-for="AutorId" class="form-select" asp-items="ViewBag.AutorId"></select>
+                                <a asp-controller="Autors" asp-action="Create" class="btn btn-success">
+                                    <i class="bi bi-plus-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Categoria -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Categoria" class="form-label text-primary"></label>
+                            <div class="input-group shadow-sm">
+                                <select asp-for="CategoriaId" class="form-select" asp-items="ViewBag.CategoriaId"></select>
+                                <a asp-controller="Categorias" asp-action="Create" class="btn btn-success">
+                                    <i class="bi bi-plus-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Editora -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Editora" class="form-label text-primary"></label>
+                            <div class="input-group shadow-sm">
+                                <select asp-for="EditoraId" class="form-select" asp-items="ViewBag.EditoraId"></select>
+                                <a asp-controller="Editoras" asp-action="Create" class="btn btn-success">
+                                    <i class="bi bi-plus-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-lg">
+                                <i class="bi bi-save"></i> Criar
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg rounded-pill shadow-lg">
+                                <i class="bi bi-arrow-left"></i> Voltar à Lista
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

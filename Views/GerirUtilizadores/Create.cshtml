@@ -1,0 +1,61 @@
+﻿@model B_LEI.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Criar Administrador";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-primary">@ViewData["Title"]</h1>
+        <p class="text-muted">Preencha os campos abaixo para criar um novo administrador.</p>
+    </div>
+
+    <!-- Formulário de Criação -->
+    <div class="card shadow-lg border-0">
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Nome</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="UserName" class="form-label">Nome de Usuário</label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <!-- Botão de Criar -->
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-lg">
+                        <i class="bi bi-person-plus"></i> Criar Administrador
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Botão de Voltar -->
+    <div class="text-center mt-4">
+        <a asp-action="Index" class="btn btn-secondary btn-lg rounded-pill shadow-lg">
+            <i class="bi bi-arrow-left"></i> Voltar para a Lista
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<B_LEI.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Categorias";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-primary">Categorias</h1>
+        <p class="text-muted">Lista de categorias disponíveis no sistema.</p>
+    </div>
+
+    <!-- Botão de Adicionar -->
+    <div class="text-end mb-3">
+        <a asp-action="Create" class="btn btn-primary btn-lg rounded-pill shadow-lg">
+            <i class="bi bi-plus-circle"></i> Adicionar Nova Categoria
+        </a>
+    </div>
+
+    <!-- Tabela de Categorias -->
+    <div class="table-responsive shadow-lg">
+        <table class="table table-hover table-striped align-middle text-center">
+            <thead class="table-primary">
+                <tr>
+                    <th class="text-uppercase">Nome</th>
+                    <th class="text-uppercase">Descrição</th>
+                    <th class="text-uppercase">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <!-- Nome -->
+                        <td class="fw-bold">
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+
+                        <!-- Descrição -->
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descricao)
+                        </td>
+
+                        <!-- Ações -->
+                        <td>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a asp-action="Edit" asp-route-id="@item.CategoriaId" class="btn btn-warning btn-sm rounded-pill">
+                                    <i class="bi bi-pencil"></i> Editar
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.CategoriaId" class="btn btn-info btn-sm rounded-pill text-white">
+                                    <i class="bi bi-eye"></i> Detalhes
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.CategoriaId" class="btn btn-danger btn-sm rounded-pill">
+                                    <i class="bi bi-trash"></i> Excluir
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

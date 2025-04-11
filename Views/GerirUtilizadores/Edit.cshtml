@@ -1,0 +1,96 @@
+﻿@model B_LEI.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Editar Utilizador";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-primary">@ViewData["Title"]</h1>
+        <p class="text-muted">Edite as informações do utilizador abaixo.</p>
+    </div>
+
+    <!-- Formulário de Edição -->
+    <div class="card shadow-lg border-0">
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Nome</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="UserName" class="form-label">Nome de Usuário</label>
+                    <input asp-for="UserName" class="form-control" readonly />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" readonly />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Morada" class="form-label">Morada</label>
+                    <input asp-for="Morada" class="form-control" />
+                    <span asp-validation-for="Morada" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PhoneNumber" class="form-label">Número de Telefone</label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DataCriada" class="form-label">Data de Criação</label>
+                    <input asp-for="DataCriada" class="form-control" readonly />
+                    <span asp-validation-for="DataCriada" class="text-danger"></span>
+                </div>
+
+                <!-- Estado de Bloqueio -->
+                <div class="mb-3">
+                    <label class="form-label">Bloqueado</label>
+                    <div>
+                        @if (Model.LockoutEnd != null && Model.LockoutEnd > DateTimeOffset.Now)
+                        {
+                            <span class="text-danger">Sim</span>
+                            <p><strong>Motivo do bloqueio:</strong> @Model.LockoutReason</p>
+                        }
+                        else
+                        {
+                            <span class="text-success">Não</span>
+                        }
+                    </div>
+                </div>
+
+                <!-- Botão de Salvar -->
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-lg">
+                        <i class="bi bi-save"></i> Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Botão de Voltar -->
+    <div class="text-center mt-4">
+        <a asp-action="Index" class="btn btn-secondary btn-lg rounded-pill shadow-lg">
+            <i class="bi bi-arrow-left"></i> Voltar para a Lista
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

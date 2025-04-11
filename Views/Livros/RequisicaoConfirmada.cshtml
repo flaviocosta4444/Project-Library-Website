@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Confirmação de Requisição";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-primary">@ViewData["Title"]</h1>
+        <p class="text-muted">A sua requisição foi processada com sucesso.</p>
+    </div>
+
+    <!-- Mensagem de Sucesso -->
+    @if (!string.IsNullOrEmpty(ViewData["Message"]?.ToString()))
+    {
+        <div class="alert alert-success text-center shadow-lg rounded">
+            <i class="bi bi-check-circle-fill me-2"></i>@ViewData["Message"]
+        </div>
+    }
+
+    <!-- Botão para Página Inicial -->
+    <div class="text-center mt-4">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg rounded-pill shadow-lg">
+            <i class="bi bi-house-door"></i> Voltar para a Página Inicial
+        </a>
+    </div>
+</div>

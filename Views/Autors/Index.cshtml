@@ -1,0 +1,55 @@
+﻿@model IEnumerable<B_LEI.Models.Autor>
+
+@{
+    ViewData["Title"] = "Autores";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-primary">Autores</h1>
+        <p class="text-muted">Lista de autores disponíveis no sistema.</p>
+    </div>
+
+    <!-- Botão de Adicionar -->
+    <div class="text-end mb-4">
+        <a asp-action="Create" class="btn btn-primary btn-lg rounded-pill shadow-lg">
+            <i class="bi bi-person-plus"></i> Adicionar Novo Autor
+        </a>
+    </div>
+
+    <!-- Cartões de Autores -->
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="card shadow-lg border-0 h-100">
+                    <!-- Foto do Autor -->
+                    <div class="card-img-container" style="width: 100%; height: 200px; overflow: hidden;">
+                        <img src="~/FotoAutor/@item.Foto" class="card-img-top" alt="@item.Nome" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+
+                    <div class="card-body text-center">
+                        <!-- Nome do Autor -->
+                        <h5 class="card-title fw-bold text-primary">@item.Nome</h5>
+                    </div>
+
+                    <!-- Ações -->
+                    <div class="card-footer bg-light text-center">
+                        <div class="d-flex justify-content-around">
+                            <a asp-action="Edit" asp-route-id="@item.AutorId" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.AutorId" class="btn btn-info btn-sm text-white">
+                                <i class="bi bi-eye"></i> Detalhes
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.AutorId" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i> Excluir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

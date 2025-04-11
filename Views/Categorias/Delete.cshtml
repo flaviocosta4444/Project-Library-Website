@@ -1,0 +1,39 @@
+﻿@model B_LEI.Models.Categoria
+
+@{
+    ViewData["Title"] = "Excluir Categoria";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-danger">Excluir Categoria</h1>
+        <p class="text-muted">Tem certeza de que deseja excluir esta categoria?</p>
+    </div>
+
+    <!-- Detalhes da Categoria -->
+    <div class="card shadow-lg border-0">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4 text-secondary">Nome:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Nome)</dd>
+
+                <dt class="col-sm-4 text-secondary">Descrição:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Descricao)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- Botões de Ação -->
+    <div class="text-center mt-4">
+        <form asp-action="Delete" class="d-inline">
+            <input type="hidden" asp-for="CategoriaId" />
+            <button type="submit" class="btn btn-danger btn-lg rounded-pill shadow">
+                <i class="bi bi-trash"></i> Excluir
+            </button>
+        </form>
+        <a asp-action="Index" class="btn btn-secondary btn-lg rounded-pill shadow ms-2">
+            <i class="bi bi-arrow-left"></i> Voltar à Lista
+        </a>
+    </div>
+</div>

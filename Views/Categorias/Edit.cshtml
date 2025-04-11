@@ -1,0 +1,49 @@
+﻿@model B_LEI.Models.Categoria
+
+@{
+    ViewData["Title"] = "Editar Categoria";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-primary">Editar Categoria</h1>
+        <p class="text-muted">Atualize as informações da categoria abaixo.</p>
+    </div>
+
+    <!-- Formulário de Edição -->
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center">
+            <h4>@Model?.Nome</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="CategoriaId" />
+
+                <div class="mb-3">
+                    <label asp-for="Nome" class="form-label text-secondary">Nome da Categoria</label>
+                    <input asp-for="Nome" class="form-control" placeholder="Digite o nome da categoria" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Descricao" class="form-label text-secondary">Descrição</label>
+                    <textarea asp-for="Descricao" class="form-control" rows="3" placeholder="Digite a descrição"></textarea>
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+
+                <div class="text-center mt-4">
+                    <input type="submit" value="Salvar" class="btn btn-success btn-lg rounded-pill shadow" />
+                    <a asp-action="Index" class="btn btn-secondary btn-lg rounded-pill shadow ms-2">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,47 @@
+﻿@model B_LEI.Models.Editora
+
+@{
+    ViewData["Title"] = "Excluir Editora";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-danger">Excluir Editora</h1>
+        <p class="text-muted">Você tem certeza que deseja excluir esta editora?</p>
+    </div>
+
+    <!-- Detalhes da Editora -->
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-danger text-white text-center">
+            <h4>@Model?.Nome</h4>
+        </div>
+        <div class="card-body">
+            <h4>Detalhes da Editora</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2 text-secondary">
+                    @Html.DisplayNameFor(model => model.Nome)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Nome)
+                </dd>
+                <dt class="col-sm-2 text-secondary">
+                    @Html.DisplayNameFor(model => model.Descricao)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Descricao)
+                </dd>
+            </dl>
+
+            <!-- Formulário de Exclusão -->
+            <div class="text-center mt-4">
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="EditoraId" />
+                    <input type="submit" value="Excluir" class="btn btn-danger btn-lg rounded-pill shadow" />
+                    <a asp-action="Index" class="btn btn-secondary btn-lg rounded-pill shadow ms-2">Voltar para a Lista</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+﻿@model B_LEI.Models.Livro
+
+@{
+    ViewData["Title"] = "Editar Livro";
+}
+
+<div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-4">
+        <h1 class="text-primary">Editar Livro</h1>
+        <p class="text-muted">Atualize as informações do livro abaixo.</p>
+    </div>
+
+    <!-- Formulário de Edição -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h4 class="card-title text-center text-secondary mb-4">Informações do Livro</h4>
+
+                    <!-- Formulário -->
+                    <form asp-action="Edit" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="LivroId" />
+
+                        <!-- Título -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Titulo" class="form-label text-primary">Título</label>
+                            <input asp-for="Titulo" class="form-control shadow-sm" placeholder="Título do livro..." />
+                            <span asp-validation-for="Titulo" class="text-danger"></span>
+                        </div>
+
+                        <!-- ISBN -->
+                        <div class="form-group mb-3">
+                            <label asp-for="ISBN" class="form-label text-primary">ISBN</label>
+                            <input asp-for="ISBN" class="form-control shadow-sm" placeholder="ISBN do livro..." />
+                            <span asp-validation-for="ISBN" class="text-danger"></span>
+                        </div>
+
+                        <!-- Edição -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Edicao" class="form-label text-primary">Edição</label>
+                            <input asp-for="Edicao" class="form-control shadow-sm" placeholder="Edição do livro..." />
+                            <span asp-validation-for="Edicao" class="text-danger"></span>
+                        </div>
+
+                        <!-- Ano de Publicação -->
+                        <div class="form-group mb-3">
+                            <label asp-for="AnoPublicacao" class="form-label text-primary">Ano de Publicação</label>
+                            <input asp-for="AnoPublicacao" class="form-control shadow-sm" placeholder="Ano de publicação..." />
+                            <span asp-validation-for="AnoPublicacao" class="text-danger"></span>
+                        </div>
+
+                        <!-- Capa (Imagem) -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Capa" class="form-label text-primary">Capa</label>
+                            <input type="file" asp-for="Capa" class="form-control shadow-sm" />
+                            <small class="form-text text-muted">Carregue uma nova capa para o livro.</small>
+                            <span asp-validation-for="Capa" class="text-danger"></span>
+                        </div>
+
+                        <!-- Descrição -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Descricao" class="form-label text-primary">Descrição</label>
+                            <input asp-for="Descricao" class="form-control shadow-sm" placeholder="Descrição do livro..." />
+                            <span asp-validation-for="Descricao" class="text-danger"></span>
+                        </div>
+
+                        <!-- Autor -->
+                        <div class="form-group mb-3">
+                            <label asp-for="AutorId" class="form-label text-primary">Autor</label>
+                            <select asp-for="AutorId" class="form-control shadow-sm" asp-items="ViewBag.AutorId"></select>
+                            <span asp-validation-for="AutorId" class="text-danger"></span>
+                        </div>
+
+                        <!-- Categoria -->
+                        <div class="form-group mb-3">
+                            <label asp-for="CategoriaId" class="form-label text-primary">Categoria</label>
+                            <select asp-for="CategoriaId" class="form-control shadow-sm" asp-items="ViewBag.CategoriaId"></select>
+                            <span asp-validation-for="CategoriaId" class="text-danger"></span>
+                        </div>
+
+                        <!-- Editora -->
+                        <div class="form-group mb-3">
+                            <label asp-for="EditoraId" class="form-label text-primary">Editora</label>
+                            <select asp-for="EditoraId" class="form-control shadow-sm" asp-items="ViewBag.EditoraId"></select>
+                            <span asp-validation-for="EditoraId" class="text-danger"></span>
+                        </div>
+
+                        <!-- Botão de Enviar -->
+                        <div class="form-group text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-lg">
+                                <i class="bi bi-save"></i> Salvar
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary btn-lg rounded-pill shadow ms-2">
+                                <i class="bi bi-arrow-left"></i> Voltar à Lista
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
